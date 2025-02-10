@@ -5,24 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 
 
-const userLoginSchema = zod.object({
-    body : zod.object({
-        email : zod.string().email(),
-        password: zod
-            .string()
-            .min(6)
-            .refine(value => /[A-Z]/.test(value), {
-                message: 'Password must contain at least one uppercase letter',
-            })
-            .refine(value => /[0-9]/.test(value), {
-                message: 'Password must contain at least one number',
-            })
-            .refine(value => /[!@#$%^&*(),.?":{}|<>]/.test(value), {
-                message: 'Password must contain at least one special character',
-            })
-    })
-})
-
 const passwordValidation = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/);
 
 const validationSchema = zod.object({
@@ -44,10 +26,8 @@ export function SignUp(){
 
     async function onSubmit(data) {
         console.log(data);
-        // console.log(formData.get("userName"))
 
         try{
-
             const response = await axios.post("http://localhost:8000/userData/register" , data);
             console.log(response)
 
@@ -58,8 +38,6 @@ export function SignUp(){
         {
             console.log("Error Occured: ",error)
         }
-
-
     }
 
     return (
@@ -71,7 +49,7 @@ export function SignUp(){
                         <form action="#" className="form flex-row justify-center items-center gap-9" onSubmit={handleSubmit(onSubmit)}>
                             <div className="flex flex-col">
                                 <h3 className="text-white mt-8 font-bold">UserName:</h3>
-                                {errors?.name && <span className="text-red-500 font-semibold">{errors.name.message}</span>}
+                                {errors?.userName && <span className="text-red-500 font-semibold">{errors.userName.message}</span>}
                                 <input type="text" className="rounded-sm" {...register('userName')} />
                             </div>
                         
@@ -95,8 +73,8 @@ export function SignUp(){
                         </form>
                     </div>
                     <div>
-                        <p className="text-[#374151] text-sm font-bold mt-5" id="display_status">
-                            User Created and Email Sent
+                        <p className="text-[#374151] text-sm font-bold mt-5 cursor-default" id="display_status">
+                            User Registered and Verification Email Sent
                         </p>
                     </div>
                 </div>

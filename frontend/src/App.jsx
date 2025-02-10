@@ -3,6 +3,7 @@ import { LandingPage } from "./pages/LandingPage";
 import { Routes, Route } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { SignUp } from "./pages/SignUp";
+import { EmailVerify } from "./pages/EmailVerify";
 
 export default function App() {
   return (
@@ -13,7 +14,8 @@ export default function App() {
       <Route path="/" element={<LandingPage />}/>
       <Route path="/Login" element={<Login />}/>
       <Route path="/SignUp" element={<SignUp />}/>
-    </Routes>
+      <Route path="/EmailVerify/:token" element={<EmailVerify />}/>
+    </Routes> 
     </>
   )
 }

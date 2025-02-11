@@ -31,7 +31,7 @@ export const register = async (req , res) => {
       password: hashedPws,
     });
 
-    const verification_token = generateToken(userData._id , "5m");
+    const verification_token = generateToken(userData._id , process.env.TOKEN_TIME);
 
     await userSchema.updateOne({
       $where: {
@@ -68,6 +68,9 @@ export const login = async (req , res , next) => {
     const pws = req.body.password;
     const fetchData = await userSchema.findOne({ email });
 
+    console.log("FetchedData: ",fetchData.userName);
+    
+
     bcrypt.compare(pws, fetchData.password, (err, isMatch) => {
       if (err) {
         return res.status(500).json({
@@ -83,14 +86,15 @@ export const login = async (req , res , next) => {
         });
       } else {
         if (fetchData.verified) {
-          const accessToken = generateToken(fetchData._id , "5s");
-          const refreshToken = generateToken(fetchData._id , "7d");
+          const accessToken = generateToken(fetchData._id , process.env.TOKEN_TIME);
+          const refreshToken = generateToken(fetchData._id , process.env.REFRESH_TOKEN_TIME);
 
           fetchData.isLoggedIn = true;
           fetchData.save();
 
 
           res.status(201).json({
+            userName : fetchData.userName,
             token: accessToken,
             refreshToken : refreshToken,
             success: true,
@@ -111,7 +115,8 @@ export const login = async (req , res , next) => {
   }
   catch (error) {
     res.json({
-      message: "" + error,
+      status: 400,
+      message: "" + error.message,
     });
   }
 };

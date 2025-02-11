@@ -37,7 +37,7 @@ const sendEmail = async(msg, to) =>
         subject: 'Verification Mail',
         html:`<p>Hello, verify your email address by clicking on this</p>
         <br>
-        <a href="http://localhost:8000/userData/verify/${msg}">Click here to verify</a>`
+        <a href="http://localhost:5173/EmailVerify/${msg}">Click here to verify</a>`
     };
     
     mailTransporter.sendMail(mailDetails,

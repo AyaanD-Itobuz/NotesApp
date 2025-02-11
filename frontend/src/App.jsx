@@ -5,19 +5,24 @@ import { Login } from "./pages/Login";
 import { SignUp } from "./pages/SignUp";
 import { EmailVerify } from "./pages/EmailVerify";
 import { Notes } from "./pages/NotesPage";
+import { useState } from "react";
+import {UserContext} from "./context/UserContext"
 
 export default function App() {
+  const [isLogin, setIsLogin] = useState(false);
+  // const [userName, setUserName] = useState("User");
   return (
     <>
-    <Navbar/>
-
-    <Routes>
-      <Route path="/" element={<LandingPage />}/>
-      <Route path="/Login" element={<Login />}/>
-      <Route path="/SignUp" element={<SignUp />}/>
-      <Route path="/EmailVerify/:token" element={<EmailVerify />}/>
-      <Route path="/Notes" element={<Notes />}/>
-    </Routes> 
+    <UserContext.Provider value={{ isLogin, setIsLogin }}>
+      <Navbar/>
+      <Routes>
+        <Route path="/" element={<LandingPage />}/>
+        <Route path="/Login" element={<Login />}/>
+        <Route path="/SignUp" element={<SignUp />}/>
+        <Route path="/EmailVerify/:token" element={<EmailVerify />}/>
+        <Route path="/Notes" element={<Notes />}/>
+      </Routes> 
+    </UserContext.Provider>
     </>
   )
 }

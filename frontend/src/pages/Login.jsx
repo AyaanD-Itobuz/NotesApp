@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { ToastContainer , toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
-
+import { UserContext } from "../context/UserContext";
+import { useContext } from "react";
 
 export function Login(){ 
     const notifySuccess = (msg) => toast.success(msg, { autoClose: 2000 });
@@ -12,9 +12,12 @@ export function Login(){
     const{register, handleSubmit} = useForm()
     const navigate = useNavigate();
 
+    //Changing Logged in Status:
+    const { isLogin, setIsLogin, userName } = useContext(UserContext);
+    console.log("Loggin: ",isLogin)
+
     async function userLogin(data) {
         try{
-            console.log("reached")
             console.log("Data: ",data)
 
             const response = await axios.post("http://localhost:8000/userData/login",data)
@@ -40,7 +43,7 @@ export function Login(){
                 {
                     
                     notifySuccess("Login Suggessful")
-                    console.log("login")
+                    setIsLogin(true); 
                     //Accessing Access Token , Refresh Token , userName
                     const access_token = response.data.token;
                     const refresh_token = response.data.refreshToken;
@@ -74,7 +77,7 @@ export function Login(){
 
     return (
     <>
-        <div className="flex justify-center items-center h-[91.2vh] login bg-[#1f2937]">
+        <div className="flex justify-center items-center h-[91.2vh] bg-[#1f2937]">
             
             <div className="flex-col flex bg-[#374151] p-20 rounded-md items-center login-form">
                 <h2 className=" font-bold text-white text-4xl text-center">LogIn</h2>
@@ -84,7 +87,7 @@ export function Login(){
                     <h3 className="text-white font-bold mt-5">Password</h3>
                     <input  className="rounded-sm" placeholder="Enter Your Password" type="password" autoComplete="on" {...register("password")}/>
                     <div className="flex justify-center items-center">
-                        <button  className="p-2  bg-[#7F21FD] hover:bg-violet-600 focus:outline-2 focus:outline-offset-2 focus:outline-violet-500 active:bg-violet-700 text-white rounded-md mt-12">Submit</button>
+                    <button type="submit" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 mt-12 p-5">Submit</button>
                     </div>
                 </form>
             </div> 

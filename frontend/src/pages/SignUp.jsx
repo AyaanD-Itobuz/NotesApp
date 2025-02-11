@@ -115,12 +115,8 @@ export function SignUp() {
               </div>
 
               <div className="flex justify-center items-center">
-                <button
-                  type="submit"
-                  className="p-2 bg-[#7F21FD] hover:bg-violet-600 focus:outline-2 focus:outline-offset-2 focus:outline-violet-500 active:bg-violet-700 text-white rounded-md mt-12"
-                >
-                  Submit
-                </button>
+              <button type="submit" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 mt-12 p-5">Submit</button>
+
               </div>
             </form>
           </div>

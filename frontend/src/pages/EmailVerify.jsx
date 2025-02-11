@@ -32,7 +32,7 @@ export function EmailVerify() {
 
     return(
         <>
-            <div>
+            <div className="flex flex-col justify-center items-center font-bold mt-5">
                 <h2>Email Verification</h2>
                 <p>{message}</p>
             </div>

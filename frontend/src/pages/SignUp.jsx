@@ -36,20 +36,16 @@ export function SignUp() {
   });
 
   async function onSubmit(data) {
-    console.log(data);
-
     try {
       const response = await axios.post(
         "http://localhost:8000/userData/register",
         data
       );
       console.log(response);
-      console.log(response.data.message);
+      // console.log(response.data.message);
 
 
       if (response.data.message == "Error: User Already Exists") {
-        console.log("reached");
-
         notifyError("User Already Exists");
       } else {
         notifySuccess("User Registered and Verification Email Send");
@@ -59,18 +55,17 @@ export function SignUp() {
       notifyError(error.message);
     }
   }
-  const notifySuccess = (msg) => toast.success(msg , {autoClose:2000});
-  const notifyError = (msg) => toast.error(msg , {autoClose:2000});
-    
+  const notifySuccess = (msg) => toast.success(msg, { autoClose: 2000 });
+  const notifyError = (msg) => toast.error(msg, { autoClose: 2000 });
+
   return (
-    
+
     <>
       <div className="flex justify-center items-center h-[91.2vh] login bg-[#1f2937]">
         <div className="flex-col flex login-form bg-[#374151] p-20 rounded-md items-center">
           <h2 className="font-bold text-white text-4xl text-center">SignUp</h2>
           <div>
             <form
-              action="#"
               className="form flex-row justify-center items-center gap-9"
               onSubmit={handleSubmit(onSubmit)}
             >
@@ -84,6 +79,7 @@ export function SignUp() {
                 <input
                   type="text"
                   className="rounded-sm"
+                  placeholder="Enter Your UserName"
                   {...register("userName")}
                 />
               </div>
@@ -98,6 +94,7 @@ export function SignUp() {
                 <input
                   type="email"
                   className="rounded-sm"
+                  placeholder="Enter Your Email"
                   {...register("email")}
                 />
               </div>
@@ -112,6 +109,7 @@ export function SignUp() {
                 <input
                   type="Password"
                   className="rounded-sm"
+                  placeholder="Enter Your Password"
                   {...register("password")}
                 />
               </div>

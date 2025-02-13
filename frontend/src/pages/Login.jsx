@@ -13,7 +13,7 @@ export function Login(){
     const navigate = useNavigate();
 
     //Changing Logged in Status:
-    const { isLogin, setIsLogin, userName } = useContext(UserContext);
+    const { isLogin, setIsLogin } = useContext(UserContext);
     console.log("Loggin: ",isLogin)
 
     async function userLogin(data) {
@@ -69,12 +69,6 @@ export function Login(){
             }
     }
 
-    function reDirect_to_Notes()
-    {
-        const navigate = useNavigate();
-        navigate("/NotesPage")
-    }
-
     return (
     <>
         <div className="flex justify-center items-center h-[91.2vh] bg-[#1f2937]">
@@ -83,11 +77,12 @@ export function Login(){
                 <h2 className=" font-bold text-white text-4xl text-center">LogIn</h2>
                 <form action="#" onSubmit={handleSubmit(userLogin)}>
                     <h3 className="text-white mt-8 font-bold">Email:</h3>
-                    <input  className="rounded-sm" placeholder="Enter Your Email" {...register("email")}/>
+                    <input  className=" ps-2 min-w-[10vw] min-h-[5vh] rounded-sm placeholder:ps-2 " placeholder="Enter Your Email" {...register("email")}/>
+                   
                     <h3 className="text-white font-bold mt-5">Password</h3>
-                    <input  className="rounded-sm" placeholder="Enter Your Password" type="password" autoComplete="on" {...register("password")}/>
+                    <input  className="ps-2 min-w-[10vw] min-h-[5vh] rounded-sm placeholder:ps-2" placeholder="Enter Your Password" type="password" autoComplete="on" {...register("password")}/>
                     <div className="flex justify-center items-center">
-                    <button type="submit" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 mt-12 p-5">Submit</button>
+                        <button type="submit" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 mt-12 p-5">Submit</button>
                     </div>
                 </form>
             </div> 

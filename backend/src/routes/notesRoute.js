@@ -9,7 +9,7 @@ import { generateAccessToken, verifyRefreshToken } from '../middleware/refreshTo
 const notesRoute = express.Router();
 
 notesRoute.post("/createNote" , decodeToken , createNote);
-notesRoute.delete("/deleteNote" , decodeToken , deleteNote);
+notesRoute.delete("/deleteNote/:id" , decodeToken , deleteNote);
 notesRoute.post("/updateNote" , decodeToken , updateNote);
 notesRoute.get("/getAllNote" , decodeToken , getAllNote);
 notesRoute.post("/searchNote" , decodeToken , searchNote);

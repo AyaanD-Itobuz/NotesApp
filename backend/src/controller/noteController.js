@@ -46,7 +46,9 @@ export const createNote = async (req, res) => {
 
 export const deleteNote = async (req, res) => {
   try {
-    const data = await notesSchema.findByIdAndDelete(req.body._id);
+    const _id = req.params.id; 
+    
+    const data = await notesSchema.findByIdAndDelete(_id);
 
     if (data) {
       res.json({
@@ -73,33 +75,49 @@ export const deleteNote = async (req, res) => {
 
 export const updateNote = async (req, res) => {
   try {
-    const { _id } = req.body;
-    const { title, content } = req.body;
+    const { _id, title, content } = req.body;
 
-    const data = await notesSchema.findByIdAndUpdate({ _id }, { title: title, content: content });
+    const noteToUpdate = await notesSchema.findById(_id);
+
+    if (!noteToUpdate) {
+      return res.json({
+        status: 400,
+        message: "Note not found"
+      });
+    }
+
+    const existingTitle = await notesSchema.findOne({ title: title });
+
+    if (existingTitle && existingTitle._id !== _id) {
+      return res.json({
+        status: 400,
+        message: "Title already exists. Please choose a different title."
+      });
+    }
+
+    const data = await notesSchema.findByIdAndUpdate(_id, { title: title, content: content });
 
     if (data) {
       res.json({
         status: 200,
         message: "Data Updated"
-      })
-    }
-    else {
+      });
+    } else {
       res.json({
         status: 400,
         message: "Data Not Updated"
-      })
+      });
     }
   }
   catch (error) {
     res.json({
-      status: 200,
-      message: "Data not Found",
-      error : error.message
-    })
+      status: 500,
+      message: "Error occurred while updating the note",
+      error: error.message
+    });
   }
-
 };
+
 
 export const getAllNote = async (req, res) => {
   try {

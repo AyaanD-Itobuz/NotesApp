@@ -68,7 +68,7 @@ export const login = async (req , res , next) => {
     const pws = req.body.password;
     const fetchData = await userSchema.findOne({ email });
 
-    console.log("FetchedData: ",fetchData.userName);
+    // console.log("FetchedData: ",fetchData.userName);
     
 
     bcrypt.compare(pws, fetchData.password, (err, isMatch) => {

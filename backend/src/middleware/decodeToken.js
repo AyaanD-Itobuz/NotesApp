@@ -7,8 +7,10 @@ config();
 export const decodeToken = async(req , res , next) => {
 
     let accessToken = String(req.headers.authorization);
+    console.log("at",req.headers)
     accessToken = String(accessToken.split(' ')[1]);
-
+    console.log("acc",accessToken);
+    
     
     if(!accessToken)
     {

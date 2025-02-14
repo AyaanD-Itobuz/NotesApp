@@ -3,18 +3,18 @@ import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { EditNote } from "./EditNote";
 
-const access_token = localStorage.getItem("accessToken");
-const user = localStorage.getItem("userName");
-
 let data = "";
 const notifySuccess = (msg) => toast.success(msg, { autoClose: 2000 });
 const notifyError = (msg) => toast.error(msg, { autoClose: 2000 });
 
-export const NoteCard = ({ setrender, render, setModalOpen, setType }) => {
+export const NoteCard = ({ setrender, render, setModalOpen, setEditModalOpen ,setType }) => {
   const [cards, setCards] = useState([]);
 
+  const access_token = localStorage.getItem("accessToken");
+  const user = localStorage.getItem("userName");
+
   //Fetching Notes
-  const fetchInfo = async () => {
+  async function fetchInfo() {
     const response = await axios.get(
       `http://localhost:8000/noteData/getAllNote`,
       {
@@ -24,7 +24,10 @@ export const NoteCard = ({ setrender, render, setModalOpen, setType }) => {
         },
       }
     );
+
     data = await response.data.data;
+    // console.log("Data: ", data);
+
     data.forEach((value) => {
       let date = value.createdAt;
       let newDate = date.slice(0, 10);
@@ -34,18 +37,20 @@ export const NoteCard = ({ setrender, render, setModalOpen, setType }) => {
   };
 
   //Deleting Notes
-  const deleteCards = async () => {
+  const deleteCards = async (card_id) => {
     try {
-      console.log(access_token);
-      const response = await axios.delete("http://localhost:8000/noteData/deleteNote" , 
+      // console.log(access_token);
+      const id = { _id: card_id };
+      // console.log("card id: ", card_id);
+      const response = await axios.delete(
+        `http://localhost:8000/noteData/deleteNote/${card_id}`,
         {
           headers: {
-            Authorization: `Bearer ${access_token}`,
-            "Content-Type": "application/json",
-          },
+            'Authorization': `Bearer ${access_token}`,"Content-Type": "application/json",
+        }
         }
       );
-      console.log(response);
+      // console.log(response);
       if (response.data.status === 200) {
         notifySuccess("success");
         setrender(!render);
@@ -67,26 +72,41 @@ export const NoteCard = ({ setrender, render, setModalOpen, setType }) => {
     <>
       {cards.map((dataObj, index) => {
         return (
-          <div key={index} className="flex flex-col bg-white rounded-lg shadow-lg min-w-[30vw] min-h-[25vh] max-w-[30vw]  max-h-[25vh] p-6 justify-center items-center">
+          <div
+            key={index}
+            className="flex flex-col bg-white rounded-lg shadow-lg min-w-[30vw] min-h-[25vh] max-w-[30vw]  max-h-[25vh] p-6 justify-center items-center"
+          >
             <div className="flex flex-col gap-5 min-w-[25vw]">
-                <div className="text-center text-black title">{dataObj.title}</div>
-                <div className="overflow-scroll break-words h-20 content">{dataObj.content}</div>
-                <div className="flex flex-row  justify-between">
-                    <div className="flex items-end createdAt">{dataObj.createdAt}</div>
-                    <div className="flex flex-row gap-2">
-                        <div className="edit">
-                            <EditNote
-                            setModalOpen={setModalOpen}
-                            setType={setType}
-                            dataObj={dataObj}
-                            ></EditNote>
-                        </div>
-                        <div className="delete">
-                            <button className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center  cursor-pointer"
-                            onClick={() => deleteCards(dataObj._id)}>Delete</button>
-                        </div>
-                    </div>
+              <div className="text-center text-black title">
+                {dataObj.title}
+              </div>
+              <div className="overflow-scroll break-words h-20 content">
+                {dataObj.content}
+              </div>
+              <div className="flex flex-row  justify-between">
+                <div className="flex items-end createdAt">
+                  {dataObj.createdAt}
                 </div>
+                <div className="flex flex-row gap-2">
+                  <div className="edit">
+                   <EditNote
+                    setrender={setrender}
+                    render={render}
+                    setModalOpen={setEditModalOpen}
+                    setType={setType}
+                    dataObj={dataObj}
+                  ></EditNote>
+                  </div>
+                  <div className="delete">
+                    <button
+                      className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center  cursor-pointer"
+                      onClick={() => deleteCards(dataObj._id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         );

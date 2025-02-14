@@ -49,8 +49,8 @@ export function Login(){
                     const refresh_token = response.data.refreshToken;
                     const userName = response.data.userName;
                     
-                    // console.log("AccessToken: ",access_token);
-                    // console.log("Refresh Token: ",refresh_token)
+                    console.log("AccessToken: ",access_token);
+                    console.log("Refresh Token: ",refresh_token)
             
                     //Storing Data to Local Storage
                     localStorage.setItem("accessToken" , access_token)

@@ -78,7 +78,7 @@ export function SignUp() {
                 )}
                 <input
                   type="text"
-                  className="rounded-sm placeholder:ps-2"
+                  className="ps-2 min-w-[10vw] min-h-[5vh] rounded-sm placeholder:ps-2"
                   placeholder="Enter Your UserName"
                   {...register("userName")}
                 />
@@ -93,7 +93,7 @@ export function SignUp() {
                 )}
                 <input
                   type="email"
-                  className="rounded-sm placeholder:ps-2"
+                  className="ps-2 min-w-[10vw] min-h-[5vh] rounded-sm placeholder:ps-2"
                   placeholder="Enter Your Email"
                   {...register("email")}
                 />
@@ -108,7 +108,7 @@ export function SignUp() {
                 )}
                 <input
                   type="Password"
-                  className="rounded-sm placeholder:ps-2"
+                  className="ps-2 min-w-[10vw] min-h-[5vh] rounded-sm placeholder:ps-2"
                   placeholder="Enter Your Password"
                   {...register("password")}
                 />

@@ -76,7 +76,6 @@ export const deleteNote = async (req, res) => {
 export const updateNote = async (req, res) => {
   try {
     const { _id, title, content } = req.body;
-
     const noteToUpdate = await notesSchema.findById(_id);
 
     if (!noteToUpdate) {

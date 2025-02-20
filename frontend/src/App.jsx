@@ -7,10 +7,12 @@ import { EmailVerify } from "./pages/EmailVerify";
 import { Notes } from "./pages/NotesPage";
 import { useState } from "react";
 import {UserContext} from "./context/UserContext"
+import io from "socket.io-client";
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
-  // const [userName, setUserName] = useState("User");
+  const socket = io.connect("http://localhost:8000");
+
   return (
     <>
     <UserContext.Provider value={{ isLogin, setIsLogin }}>

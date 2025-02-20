@@ -12,12 +12,10 @@ const notifyError = (msg) => toast.error(msg, { autoClose: 2000 });
 
 export function Notes() {
   const [isModalOpen, setModalOpen] = useState(false);
-  // const [isEditModalOpen , setEditModalOpen] = useState(false);
 
   const { register, handleSubmit } = useForm();
   const [render, setrender] = useState();
   const [type, setType] = useState({
-    // header: "Create",
     Route: "create",
     NoteTitle: "",
     NoteContent: "",
@@ -37,8 +35,8 @@ export function Notes() {
           <div className="bg-white rounded-lg shadow-lg p-6    relative">
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-              onClick={onClose}
-            >
+              onClick={onClose}>
+
               <img
                 className="h-8 w-8"
                 src="src/assets/closeIcon.jpg"
@@ -89,68 +87,6 @@ export function Notes() {
     );
   };
 
-  // const Edit_Modal = ({ isEditOpen , onEditClose , editChildren}) => {
-  //   if(!isEditOpen)
-  //       return null;
-
-  //   return(
-  //     <>
-  //       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-  //         <div className="bg-white rounded-lg shadow-lg p-6    relative">
-  //           <button
-  //             className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-  //             onClick={onEditClose}
-  //           >
-  //             <img
-  //               className="h-8 w-8"
-  //               src="src/assets/closeIcon.jpg"
-  //               alt="Close"
-  //             />
-  //           </button>
-  //           {editChildren}
-  //         </div>
-  //       </div>
-  //     </>
-  //   )
-  // }
-
-  // const EditModal = ({isEditOpen , onEditClose}) => {
-  //   return(
-  //     <EditModal isEditOpen={isEditOpen} onEditClose={onEditClose}>
-  //       <div className="flex flex-col gap-5">
-  //         <h2 className="text-lg font-bold">Edit Note</h2>
-  //         <form action="#" onSubmit={handleSubmit(createNote)}>
-  //           <div className="flex flex-col gap-5">
-  //             <input
-  //               type="text"
-  //               className="ps-2 min-w-[28vw] min-h-[5vh]"
-  //               placeholder="Enter Title"
-  //               {...register("title")}
-  //             />
-
-  //             <textarea
-  //               aria-label="Post Content"
-  //               type="text"
-  //               placeholder="Start Typing. . ."
-  //               id="content"
-  //               className="min-h-[20vh] min-w-[28vw] p-5 placeholder:text-2xl text-2xl"
-  //               {...register("content")}
-  //             />
-  //           </div>
-  //           <div className="flex justify-center items-center">
-  //             <button
-  //               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-  //               type="submit"
-  //             >
-  //               Edit Note
-  //             </button>
-  //           </div>
-  //         </form>
-  //       </div>
-  //     </EditModal>
-  //   )
-  // }
-
   const createNote = async (data) => {
     const access_token = localStorage.getItem("accessToken");
     const refresh_token = localStorage.getItem("refreshToken");
@@ -178,10 +114,28 @@ export function Notes() {
     }
   };
 
+  const fetchUsers = async() => {
+    console.log("fetch users called");
+
+    try{
+      // const response = await axios.get();
+    }
+    catch(error)
+    {
+
+    }
+  }
+
 
   return (
     <>
-      <div className="h-[89.8vh] flex flex-col items-center justify-center bg-[#1f2937]">
+      <div className="h-[89.8vh] flex flex-col items-center justify-center gap-10 bg-[#1f2937]">
+        <div className="flex justify-center items-end chat">
+          <button onClick={fetchUsers}>
+            <img className="w-12" src="src/assets/chat.svg" alt="chat" />
+          </button>
+        </div>
+        
         <div>
           <button
             onClick={() => setModalOpen(true)}

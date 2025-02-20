@@ -167,3 +167,25 @@ export const deleteSession = async( req , res ) => {
     })
   }
 };
+
+export const getUsers = async(req , res) => {
+  try{
+    const data = await userSchema.find({})
+
+    if(data)
+    {
+      res.json({
+        status : 400,
+        data : data,
+        message : "Users Fetched Successfully"
+      })
+    }
+  }
+  catch(error)
+  {
+    res.json({
+      status : 500,
+      message : "Error Occured: " + error
+    })
+  }
+}
